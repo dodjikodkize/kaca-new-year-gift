@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Happy New Year 🎉</title>
+
+<style>
+:root {
+  --bg: linear-gradient(180deg, #0f2027, #203a43, #2c5364);
+  --gold: #ffd700;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  height: 100vh;
+  background: var(--bg);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  color: white;
+}
+
+/* ---------- Center Wrapper ---------- */
+.container {
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+/* ---------- Title ---------- */
+h1 {
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  margin-bottom: 20px;
+  animation: fadeInDown 1.2s ease;
+}
+
+/* ---------- Gift Box ---------- */
+.gift {
+  width: 160px;
+  height: 160px;
+  background: #e53935;
+  border-radius: 12px;
+  position: relative;
+  cursor: pointer;
+  animation: float 2.5s ease-in-out infinite;
+  margin: auto;
+}
+
+.gift::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 20px;
+  background: #c62828;
+  top: 0;
+  left: 0;
+  border-radius: 12px 12px 0 0;
+}
+
+.ribbon-v {
+  position: absolute;
+  width: 22px;
+  height: 100%;
+  background: var(--gold);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.ribbon-h {
+  position: absolute;
+  height: 22px;
+  width: 100%;
+  background: var(--gold);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.bow {
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 32px;
+}
+
+/* ---------- Revealed Image ---------- */
+.reveal {
+  display: none;
+  margin-top: 30px;
+  animation: fadeInUp 1s ease forwards;
+}
+
+.reveal img {
+  width: min(320px, 85vw);
+  border-radius: 18px;
+  box-shadow: 0 20px 45px rgba(0,0,0,0.4);
+}
+
+/* ---------- Snow ---------- */
+.snow {
+  position: absolute;
+  top: -10px;
+  color: white;
+  animation: snowFall linear infinite;
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+/* ---------- Animations ---------- */
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes snowFall {
+  to { transform: translateY(110vh); }
+}
+
+/* ---------- Mobile tweaks ---------- */
+@media (max-width: 480px) {
+  .gift {
+    width: 130px;
+    height: 130px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>🎉 Happy New Year 🎉</h1>
+
+  <div class="gift" id="gift">
+    <div class="bow">🎀</div>
+    <div class="ribbon-v"></div>
+    <div class="ribbon-h"></div>
+  </div>
+
+  <div class="reveal" id="reveal">
+    <!-- Replace image with your own -->
+    <img
+      src="image.webp"
+      alt="Surprise"
+    />
+  </div>
+</div>
+
+<script>
+/* ---------- Gift Click ---------- */
+const gift = document.getElementById("gift");
+const reveal = document.getElementById("reveal");
+
+gift.addEventListener("click", () => {
+  gift.style.animation = "none";
+  gift.style.transform = "scale(0.9)";
+  setTimeout(() => {
+    gift.style.display = "none";
+    reveal.style.display = "block";
+  }, 300);
+});
+
+/* ---------- Snow Generator ---------- */
+function createSnow() {
+  const snow = document.createElement("div");
+  snow.className = "snow";
+  snow.innerHTML = "❄️";
+  snow.style.left = Math.random() * 100 + "vw";
+  snow.style.fontSize = Math.random() * 10 + 10 + "px";
+  snow.style.animationDuration = Math.random() * 3 + 4 + "s";
+  document.body.appendChild(snow);
+
+  setTimeout(() => snow.remove(), 7000);
+}
+
+setInterval(createSnow, 300);
+</script>
+
+</body>
+</html>
