@@ -33,12 +33,13 @@ body {
   text-align: center;
   position: relative;
   z-index: 2;
+  max-width: 90vw;
 }
 
 /* ---------- Title ---------- */
 h1 {
   font-size: clamp(1.8rem, 5vw, 3rem);
-  margin-bottom: 20px;
+  margin-bottom: 40px;
   animation: fadeInDown 1.2s ease;
 }
 
@@ -51,7 +52,7 @@ h1 {
   position: relative;
   cursor: pointer;
   animation: float 2.5s ease-in-out infinite;
-  margin: auto;
+  margin: 20px auto;
 }
 
 .gift::before {
@@ -91,6 +92,26 @@ h1 {
   font-size: 32px;
 }
 
+/* ---------- Checkboxes ---------- */
+.checks {
+  margin-top: 15px;
+  font-size: 14px;
+  text-align: left;
+  display: inline-block;
+}
+
+.checks label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+.checks input {
+  accent-color: var(--gold);
+}
+
 /* ---------- Revealed Image ---------- */
 .reveal {
   display: none;
@@ -102,6 +123,14 @@ h1 {
   width: min(320px, 85vw);
   border-radius: 18px;
   box-shadow: 0 20px 45px rgba(0,0,0,0.4);
+}
+
+.reveal-text {
+  margin-top: 16px;
+  font-size: 16px;
+  opacity: 0;
+  animation: fadeInUp 1s ease forwards;
+  animation-delay: 0.4s;
 }
 
 /* ---------- Snow ---------- */
@@ -147,7 +176,7 @@ h1 {
 <body>
 
 <div class="container">
-  <h1>🎉 Happy New Year 🎉</h1>
+  <h1>🎉 Srecna Nova Godina 🎉</h1>
 
   <div class="gift" id="gift">
     <div class="bow">🎀</div>
@@ -155,25 +184,44 @@ h1 {
     <div class="ribbon-h"></div>
   </div>
 
+  <!-- Checkboxes -->
+  <div class="checks">
+    <label>
+      <input type="checkbox" id="terms">
+      Obevezujem se da cu kupovati LEGO svake nove godine
+    </label>
+    <label>
+      <input type="checkbox" id="newsletter">
+      Procitala sam pravila koriscenja poklona
+    </label>
+  </div>
+
   <div class="reveal" id="reveal">
-    <!-- Replace image with your own -->
-    <img
-      src="image.webp"
-      alt="Surprise"
-    />
+    <img src="image.webp" alt="Surprise" />
+    <p class="reveal-text">🎁 Čestitamo, dobili ste Dyson fen u gore navedenoj boji! Zbog kolektivnog godišnjeg odmora Deda Mraza iz Nemačke, poklon stiže sredinom januara. 🥳</p>
+    <p class="reveal-text">❤️</p>
   </div>
 </div>
 
 <script>
-/* ---------- Gift Click ---------- */
 const gift = document.getElementById("gift");
 const reveal = document.getElementById("reveal");
+const terms = document.getElementById("terms");
+const newsletter = document.getElementById("newsletter");
 
+/* ---------- Gift Click ---------- */
 gift.addEventListener("click", () => {
+  if (!terms.checked || !newsletter.checked) {
+    alert("Morate potvrditi oba uslova pre otvaranja poklona 🎁");
+    return;
+  }
+
   gift.style.animation = "none";
   gift.style.transform = "scale(0.9)";
+
   setTimeout(() => {
     gift.style.display = "none";
+    document.querySelector(".checks").style.display = "none"; // ⬅ hide checkboxes
     reveal.style.display = "block";
   }, 300);
 });
